@@ -1,0 +1,54 @@
+CREATE TABLE Products (
+	ProductId INT PRIMARY KEY,
+	ProductName TEXT
+);
+
+INSERT INTO Products
+VALUES
+	(1, 'Buckwheat'),
+	(2, 'Rice'),
+	(3, 'Water'),
+	(4, 'Milk'),
+	(5, 'Bread'),
+	(6, 'Baton'),
+	(7, 'Wine'),
+	(8, 'Liquor'),
+	(9, 'Bag');
+
+CREATE TABLE Categories (
+	CategoryId INT PRIMARY KEY,
+	CategoryName TEXT
+);
+
+INSERT INTO Categories
+VALUES
+	(1, 'Cereal'),
+	(2, 'Drinks'),
+	(3, 'Baking'),
+	(4, 'Alcohol');
+
+CREATE TABLE ProductCategories (
+	ProductId INT FOREIGN KEY REFERENCES Products(ProductId),
+	CategoryId INT FOREIGN KEY REFERENCES Categories(CategoryId),
+	PRIMARY KEY (ProductId, CategoryId)
+);
+
+INSERT INTO ProductCategories
+VALUES
+	(1, 1),
+	(2, 3),
+	(3, 2),
+	(4, 2),
+	(7, 2),
+	(8, 2),
+	(7, 4),
+	(8, 4),
+	(5, 3),
+	(6, 3);
+
+SELECT p.ProductName, c.CategoryName
+FROM Products p
+LEFT JOIN ProductCategories pc
+	ON p.ProductId = pc.ProductId
+LEFT JOIN Categories c
+	ON pc.CategoryId = c.CategoryId;
